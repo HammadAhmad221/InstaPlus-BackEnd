@@ -1,0 +1,22 @@
+{
+  "name": "instaplus-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ammaarsaleem2017@bitbucket.org/ammaarsaleem2017/instaplus-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/ammaarsaleem2017/instaplus-backend#readme",
+  "devDependencies": {
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1410.0",
+    "typescript": "^5.1.6"
+  }
+}

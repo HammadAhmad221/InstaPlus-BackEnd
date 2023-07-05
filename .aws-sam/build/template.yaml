@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  UsersPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UsersPost
+      Handler: src/lambda/users/post.handler
+      Runtime: nodejs14.x
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: get
+    Metadata:
+      SamResourceId: UsersPost
+  Layers:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: Layers
+      ContentUri: ../../src/lambda/layers
+      CompatibleRuntimes:
+      - nodejs14.x
