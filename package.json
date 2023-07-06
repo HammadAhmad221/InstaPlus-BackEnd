@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"sam build",
+    "start":"npm run build && sam local start-api",
+    "deploy":"npm run build && sam deploy"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,13 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "instaplus-backend"
+s3_prefix = "instaplus-backend"
+region = "ap-south-1"
+profile = "ammaar"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = []
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-rdtngsdcxtn9"
