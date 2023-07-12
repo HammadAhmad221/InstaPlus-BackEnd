@@ -5,14 +5,14 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: Layers
-      ContentUri: ../../src/lambda/layers
+      ContentUri: ..\..\src\lambda\layers
       CompatibleRuntimes:
       - nodejs14.x
   UsersPost:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: UsersPost
-      Handler: src/lambda/users/app.handler
+      Handler: app.handler
       Runtime: nodejs14.x
       Layers:
       - Ref: Layers

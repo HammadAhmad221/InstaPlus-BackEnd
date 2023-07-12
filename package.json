@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"sam build",
-    "start":"npm run build && sam local start-api",
-    "deploy":"npm run build && sam deploy"
+    "build": "sam build",
+    "start": "npm run build && sam local start-api",
+    "deploy": "npm run build && sam deploy"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,12 @@
   "devDependencies": {
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1410.0",
+    "esbuild": "^0.18.11",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@types/mongoose": "^5.11.97",
+    "mongoose": "^7.3.2",
+    "typescript-ioc": "^3.2.2"
   }
 }
