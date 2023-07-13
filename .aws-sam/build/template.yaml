@@ -1,6 +1,41 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Runtime: nodejs14.x
+    Timeout: 10
 Resources:
+  TestFuncAuthorizer:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: TestFuncAuthorizer
+      Handler: auth.handler
+      Runtime: nodejs14.x
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - auth.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: TestFuncAuthorizer
+  AuthorizationApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        DefaultAuthorizer: TestFuncAuthorizer
+        Authorizers:
+          TestFuncAuthorizer:
+            FunctionPayloadType: TOKEN
+            FunctionArn:
+              Fn::GetAtt:
+              - TestFuncAuthorizer
+              - Arn
   Layers:
     Type: AWS::Serverless::LayerVersion
     Properties:
@@ -22,6 +57,12 @@ Resources:
           Properties:
             Path: /users
             Method: get
+            RestApiId:
+              Ref: AuthorizationApiGateway
+            Auth:
+              Authorizer: TestFuncAuthorizer
+              AuthorizationScopes:
+              - user.read
       Environment:
         Variables:
           NODE_OPTIONS: ' --enable-source-maps'

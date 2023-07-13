@@ -2,7 +2,7 @@
   "name": "instaplus-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "sam build",
@@ -18,6 +18,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/ammaarsaleem2017/instaplus-backend#readme",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "@types/jsonwebtoken": "^9.0.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1410.0",
     "esbuild": "^0.18.11",
@@ -25,6 +27,7 @@
   },
   "dependencies": {
     "@types/mongoose": "^5.11.97",
+    "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.2",
     "typescript-ioc": "^3.2.2"
   }

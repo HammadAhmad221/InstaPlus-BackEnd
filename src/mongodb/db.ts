@@ -28,5 +28,5 @@ export const connectToMongoDB = async (): Promise<typeof mongoose> => {
 
 export const disconnectFromMongoDB = (): void => {
   mongoose.disconnect();
-  console.log('Disconnected from MongoDB');
+  console.log('DB Disconnected');
 };
