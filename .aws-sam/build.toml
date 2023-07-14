@@ -51,6 +51,32 @@ EntryPoints = ["auth.ts"]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [function_build_definitions.52926cc3-4a03-4857-a189-0d46859337af]
 codeuri = "C:\\Users\\lenovo\\OneDrive\\Desktop\\instagram--plus\\instaplus-backend\\src\\lambda\\users"
 runtime = "nodejs14.x"
@@ -68,6 +94,32 @@ Minify = true
 Target = "es2020"
 Sourcemap = true
 EntryPoints = ["app.ts"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

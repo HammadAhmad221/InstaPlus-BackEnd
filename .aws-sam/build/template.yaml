@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Globals:
   Function:
     Runtime: nodejs14.x
-    Timeout: 10
+    Timeout: 60
 Resources:
   TestFuncAuthorizer:
     Type: AWS::Serverless::Function
@@ -49,6 +49,7 @@ Resources:
       CodeUri: UsersPost
       Handler: app.handler
       Runtime: nodejs14.x
+      MemorySize: 1024
       Layers:
       - Ref: Layers
       Events:

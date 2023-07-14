@@ -15,7 +15,7 @@ export const connectToMongoDB = async (): Promise<typeof mongoose> => {
 
   try {
     const connection = await mongoose.connect(
-      'mongodb://host.docker.internal:27017/users',
+      'mongodb://host.docker.internal:27017',
       options,
     );
     console.log('DB Connected');

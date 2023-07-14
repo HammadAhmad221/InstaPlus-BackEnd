@@ -99,7 +99,7 @@ Transform: AWS::Serverless-2016-10-31
 Globals:
   Function:
     Runtime: nodejs14.x
-    Timeout: 10
+    Timeout: 60
 
 Resources:
   TestFuncAuthorizer:
@@ -142,6 +142,7 @@ Resources:
       CodeUri: src/lambda/users/
       Handler: src/lambda/users/app.handler
       Runtime: nodejs14.x
+      MemorySize: 1024
       Layers:
         - !Ref Layers
       Events:

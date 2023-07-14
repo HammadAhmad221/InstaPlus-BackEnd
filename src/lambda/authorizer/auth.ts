@@ -40,7 +40,7 @@ const extractToken = (authorizationToken: string): string | null => {
 
 const validateAuthorizationToken = async (token: string): Promise<boolean> => {
   try {
-    const decodedToken = jwt.verify(token, 'sufi123') as JwtPayload;
+    const decodedToken = jwt.verify(token, 'your_secret_key') as JwtPayload;
     console.log('Decoded token:', decodedToken);
     return true;
   } catch (error) {
