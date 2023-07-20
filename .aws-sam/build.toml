@@ -93,6 +93,34 @@ EntryPoints = ["auth.ts"]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [function_build_definitions.52926cc3-4a03-4857-a189-0d46859337af]
 codeuri = "C:\\Users\\lenovo\\OneDrive\\Desktop\\instagram--plus\\instaplus-backend\\src\\lambda\\users"
 runtime = "nodejs14.x"
@@ -166,5 +194,80 @@ EntryPoints = ["app.ts"]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[function_build_definitions.7ec75401-f448-40ea-8663-66c21691e8c1]
+codeuri = "C:\\Users\\lenovo\\OneDrive\\Desktop\\instagram--plus\\instaplus-backend\\src\\lambda\\documentService"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "src/lambda/documentService/app.handler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["DocumentCrud"]
+
+[function_build_definitions.7ec75401-f448-40ea-8663-66c21691e8c1.metadata]
+BuildMethod = "esbuild"
+
+[function_build_definitions.7ec75401-f448-40ea-8663-66c21691e8c1.metadata.BuildProperties]
+Minify = true
+Target = "es2020"
+Sourcemap = true
+EntryPoints = ["app.ts"]
+
+
+
+
+
+
+
+
+
+
+
+
+[function_build_definitions.d4045f54-fe51-4460-bd13-26cfc6e1420b]
+codeuri = "C:\\Users\\lenovo\\OneDrive\\Desktop\\instagram--plus\\instaplus-backend\\src\\lambda\\productService"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "src/lambda/productService/app.handler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["ProductCrud"]
+
+[function_build_definitions.d4045f54-fe51-4460-bd13-26cfc6e1420b.metadata]
+BuildMethod = "esbuild"
+
+[function_build_definitions.d4045f54-fe51-4460-bd13-26cfc6e1420b.metadata.BuildProperties]
+Minify = true
+Target = "es2020"
+Sourcemap = true
+EntryPoints = ["app.ts"]
 
 [layer_build_definitions]

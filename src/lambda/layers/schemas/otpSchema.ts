@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema,Document } from 'mongoose';
 
-interface Otp {
+interface Otp extends Document {
   phoneNumber: string;
   otp: string;
   createdAt: Date;

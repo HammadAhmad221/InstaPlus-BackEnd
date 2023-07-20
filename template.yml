@@ -136,6 +136,122 @@ Resources:
       CompatibleRuntimes:
         - nodejs14.x
 
+  InstallmentPlanCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/planService/
+      Handler: src/lambda/planService/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /plan
+            Method: Post
+            RestApiId: !Ref AuthorizationApiGateway
+            Auth:
+              Authorizer: TestFuncAuthorizer
+              AuthorizationScopes:  
+              - user.write  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  GaurantorCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/gurantorService/
+      Handler: src/lambda/gurantorService/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /gurantor
+            Method: Post
+            RestApiId: !Ref AuthorizationApiGateway
+            Auth:
+              Authorizer: None
+              AuthorizationScopes:  
+              - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  ProductCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/productService/
+      Handler: src/lambda/productService/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /product
+            Method: Post
+            RestApiId: !Ref AuthorizationApiGateway
+            Auth:
+              Authorizer: None
+              AuthorizationScopes:  
+              - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  
+  DocumentCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/documentService/
+      Handler: src/lambda/documentService/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /document
+            Method: Post
+            RestApiId: !Ref AuthorizationApiGateway
+            Auth:
+              Authorizer: None
+              AuthorizationScopes:  
+              - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  
   UsersPost:
     Type: AWS::Serverless::Function
     Properties:
@@ -150,12 +266,12 @@ Resources:
           Type: Api
           Properties:
             Path: /users
-            Method: get
-            RestApiId: !Ref AuthorizationApiGateway
-            Auth:
-              Authorizer: TestFuncAuthorizer
-              AuthorizationScopes:  
-              - user.read  # Updated the authorizer name here
+            Method: Post
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: None
+            #   AuthorizationScopes:  
+            #   - user.read  
     Metadata:
       BuildMethod: esbuild
       BuildProperties:

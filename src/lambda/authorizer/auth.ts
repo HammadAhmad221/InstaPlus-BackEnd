@@ -41,7 +41,7 @@ const extractToken = (authorizationToken: string): string | null => {
 const validateAuthorizationToken = async (token: string): Promise<boolean> => {
   try {
     const decodedToken = jwt.verify(token, 'your_secret_key') as JwtPayload;
-    console.log('Decoded token:', decodedToken);
+    //console.log('Decoded token:', decodedToken);
     return true;
   } catch (error) {
     console.error('Token validation error:', error);

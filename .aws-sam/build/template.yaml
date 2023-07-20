@@ -43,6 +43,72 @@ Resources:
       ContentUri: ..\..\src\lambda\layers
       CompatibleRuntimes:
       - nodejs14.x
+  ProductCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ProductCrud
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /product
+            Method: Post
+            RestApiId:
+              Ref: AuthorizationApiGateway
+            Auth:
+              Authorizer: None
+              AuthorizationScopes:
+              - user.read
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: ProductCrud
+  DocumentCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: DocumentCrud
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /document
+            Method: Post
+            RestApiId:
+              Ref: AuthorizationApiGateway
+            Auth:
+              Authorizer: None
+              AuthorizationScopes:
+              - user.read
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: DocumentCrud
   UsersPost:
     Type: AWS::Serverless::Function
     Properties:
@@ -57,13 +123,7 @@ Resources:
           Type: Api
           Properties:
             Path: /users
-            Method: get
-            RestApiId:
-              Ref: AuthorizationApiGateway
-            Auth:
-              Authorizer: TestFuncAuthorizer
-              AuthorizationScopes:
-              - user.read
+            Method: Post
       Environment:
         Variables:
           NODE_OPTIONS: ' --enable-source-maps'
