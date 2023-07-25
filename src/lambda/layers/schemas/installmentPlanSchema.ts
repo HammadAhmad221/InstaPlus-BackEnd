@@ -40,7 +40,7 @@ const durationSchema: Schema<Duration> = new Schema<Duration>({
     type: Number,
    // required: true,
   },
-});
+}, { _id: false });
 
 // Define the Fee schema
 const feeSchema: Schema<Fee> = new Schema<Fee>({
@@ -53,7 +53,7 @@ const feeSchema: Schema<Fee> = new Schema<Fee>({
     type: Number,
     //required: true,
   },
-});
+}, { _id: false });
 
 // Define the Advance schema
 const advanceSchema: Schema<Advance> = new Schema<Advance>({
@@ -66,7 +66,7 @@ const advanceSchema: Schema<Advance> = new Schema<Advance>({
     type: Number,
     //required: true,
   },
-});
+}, { _id: false });
 
 // Define the Installment Plan schema
 const installmentPlanSchema: Schema<InstallmentPlan> = new Schema<InstallmentPlan>({

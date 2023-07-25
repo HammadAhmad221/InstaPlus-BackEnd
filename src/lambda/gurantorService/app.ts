@@ -2,7 +2,7 @@ import { create, update, del } from '../layers/utils/crudUtils';
 import { Guarantor, GuarantorModel } from '../layers/schemas/gurantorSchema';
 import { APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { CONSTANTS } from '../layers/constants/constants';
-import { connectToMongoDB, disconnectFromMongoDB } from '../../mongodb/db';
+import { connectToMongoDB, disconnectFromMongoDB } from '../layers/mongodb/db';
 import { Types } from 'mongoose';
 
 interface RequestBody {

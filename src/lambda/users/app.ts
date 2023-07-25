@@ -87,7 +87,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
 import { APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { CONSTANTS } from '../layers/constants/constants';
-import { connectToMongoDB, disconnectFromMongoDB } from '../../mongodb/db';
+import { connectToMongoDB, disconnectFromMongoDB } from '../layers/mongodb/db';
 import { sendOTP } from '../layers/otpServices/sendotp';
 import { verifyOTPAndGenerateToken } from '../layers/otpServices/verifyotp';
 

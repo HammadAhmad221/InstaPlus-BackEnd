@@ -41,7 +41,7 @@ export const verifyOTPAndGenerateToken = async (
 const generateToken = (user: any): string => {
   const { _id, phoneNumber } = user;
   const payload = { _id, phoneNumber };
-  const token = jwt.sign(payload, "sufi1234", { expiresIn: '1h' });
+  const token = jwt.sign(payload, 'sir_amaar', { expiresIn: '1h' });
   return token;
 };
 

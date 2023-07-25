@@ -99,10 +99,10 @@ Transform: AWS::Serverless-2016-10-31
 Globals:
   Function:
     Runtime: nodejs14.x
-    Timeout: 60
+    Timeout: 100
 
 Resources:
-  TestFuncAuthorizer:
+  Authorizer:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/lambda/authorizer/
@@ -122,11 +122,11 @@ Resources:
     Properties:
       StageName: Prod
       Auth:
-        DefaultAuthorizer: TestFuncAuthorizer  # Updated the authorizer name here
+        DefaultAuthorizer: Authorizer  # Updated the authorizer name here
         Authorizers:
-          TestFuncAuthorizer:  # Updated the authorizer name here
+          Authorizer:  # Updated the authorizer name here
             FunctionPayloadType: TOKEN
-            FunctionArn: !GetAtt TestFuncAuthorizer.Arn
+            FunctionArn: !GetAtt Authorizer.Arn
 
   Layers:
     Type: AWS::Serverless::LayerVersion
@@ -136,6 +136,35 @@ Resources:
       CompatibleRuntimes:
         - nodejs14.x
 
+  InstallmentCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/installmentService/
+      Handler: src/lambda/installmentService/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /installment
+            Method: Post
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  
   InstallmentPlanCrud:
     Type: AWS::Serverless::Function
     Properties:
@@ -151,11 +180,11 @@ Resources:
           Properties:
             Path: /plan
             Method: Post
-            RestApiId: !Ref AuthorizationApiGateway
-            Auth:
-              Authorizer: TestFuncAuthorizer
-              AuthorizationScopes:  
-              - user.write  # Updated the authorizer name here
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -180,11 +209,11 @@ Resources:
           Properties:
             Path: /gurantor
             Method: Post
-            RestApiId: !Ref AuthorizationApiGateway
-            Auth:
-              Authorizer: None
-              AuthorizationScopes:  
-              - user.read  # Updated the authorizer name here
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -208,11 +237,11 @@ Resources:
           Properties:
             Path: /product
             Method: Post
-            RestApiId: !Ref AuthorizationApiGateway
-            Auth:
-              Authorizer: None
-              AuthorizationScopes:  
-              - user.read  # Updated the authorizer name here
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -222,7 +251,94 @@ Resources:
         EntryPoints:
           - app.ts
 
+  SubscriptionCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/subscriptionService/
+      Handler: src/lambda/subscriptionService/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 64
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /subscription
+            Method: Post
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  Search:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/search/
+      Handler: src/lambda/search/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /search
+            Method: Get
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
   
+  GetSubscriptions:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/getSubscriptions/
+      Handler: src/lambda/getSubscriptions/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 30
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getSubscriptions
+            Method: Get
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
   DocumentCrud:
     Type: AWS::Serverless::Function
     Properties:
@@ -238,11 +354,11 @@ Resources:
           Properties:
             Path: /document
             Method: Post
-            RestApiId: !Ref AuthorizationApiGateway
-            Auth:
-              Authorizer: None
-              AuthorizationScopes:  
-              - user.read  # Updated the authorizer name here
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
     Metadata:
       BuildMethod: esbuild
       BuildProperties:

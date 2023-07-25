@@ -3,12 +3,12 @@ Transform: AWS::Serverless-2016-10-31
 Globals:
   Function:
     Runtime: nodejs14.x
-    Timeout: 60
+    Timeout: 100
 Resources:
-  TestFuncAuthorizer:
+  Authorizer:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: TestFuncAuthorizer
+      CodeUri: Authorizer
       Handler: auth.handler
       Runtime: nodejs14.x
       Environment:
@@ -22,19 +22,19 @@ Resources:
         Minify: true
         Sourcemap: true
         Target: es2020
-      SamResourceId: TestFuncAuthorizer
+      SamResourceId: Authorizer
   AuthorizationApiGateway:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
       Auth:
-        DefaultAuthorizer: TestFuncAuthorizer
+        DefaultAuthorizer: Authorizer
         Authorizers:
-          TestFuncAuthorizer:
+          Authorizer:
             FunctionPayloadType: TOKEN
             FunctionArn:
               Fn::GetAtt:
-              - TestFuncAuthorizer
+              - Authorizer
               - Arn
   Layers:
     Type: AWS::Serverless::LayerVersion
@@ -43,6 +43,87 @@ Resources:
       ContentUri: ..\..\src\lambda\layers
       CompatibleRuntimes:
       - nodejs14.x
+  InstallmentCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: InstallmentCrud
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /installment
+            Method: Post
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: InstallmentCrud
+  InstallmentPlanCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: InstallmentPlanCrud
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /plan
+            Method: Post
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: InstallmentPlanCrud
+  GaurantorCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GaurantorCrud
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /gurantor
+            Method: Post
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: GaurantorCrud
   ProductCrud:
     Type: AWS::Serverless::Function
     Properties:
@@ -58,12 +139,6 @@ Resources:
           Properties:
             Path: /product
             Method: Post
-            RestApiId:
-              Ref: AuthorizationApiGateway
-            Auth:
-              Authorizer: None
-              AuthorizationScopes:
-              - user.read
       Environment:
         Variables:
           NODE_OPTIONS: ' --enable-source-maps'
@@ -76,6 +151,88 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: ProductCrud
+  SubscriptionCrud:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SubscriptionCrud
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 64
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /subscription
+            Method: Post
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: SubscriptionCrud
+  Search:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: Search
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /search
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: Search
+  GetSubscriptions:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetSubscriptions
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 30
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getSubscriptions
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: GetSubscriptions
   DocumentCrud:
     Type: AWS::Serverless::Function
     Properties:
@@ -91,12 +248,6 @@ Resources:
           Properties:
             Path: /document
             Method: Post
-            RestApiId:
-              Ref: AuthorizationApiGateway
-            Auth:
-              Authorizer: None
-              AuthorizationScopes:
-              - user.read
       Environment:
         Variables:
           NODE_OPTIONS: ' --enable-source-maps'
