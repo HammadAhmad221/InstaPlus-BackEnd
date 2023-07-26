@@ -22,7 +22,7 @@ exports.handler = async (event) => {
         body: JSON.stringify({ message: 'Internal server error' }),
       };
     }finally{
-        await disconnectFromMongoDB();
+     disconnectFromMongoDB();
     }
   };
 

@@ -178,10 +178,10 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: SubscriptionCrud
-  Search:
+  getCustomersByownerId:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: Search
+      CodeUri: getCustomersByownerId
       Handler: app.handler
       Runtime: nodejs14.x
       MemorySize: 512
@@ -191,7 +191,7 @@ Resources:
         UsersApi:
           Type: Api
           Properties:
-            Path: /search
+            Path: /getCustomersByOwnerId
             Method: Get
       Environment:
         Variables:
@@ -204,11 +204,93 @@ Resources:
         Minify: true
         Sourcemap: true
         Target: es2020
-      SamResourceId: Search
-  GetSubscriptions:
+      SamResourceId: getCustomersByownerId
+  getInstallmentsPlanByAuthor:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: GetSubscriptions
+      CodeUri: getInstallmentsPlanByAuthor
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getInstallmentPlansByAuthor
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: getInstallmentsPlanByAuthor
+  getInstallmentsBysubscriptionId:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: getInstallmentsBysubscriptionId
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getInstallmentsBySubId
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: getInstallmentsBysubscriptionId
+  GetSubscriptionsbycustomerId:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetSubscriptionsbycustomerId
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 30
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getSubscriptionsBycustomerId
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: GetSubscriptionsbycustomerId
+  GetSubscriptionsbyownerId:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetSubscriptionsbyownerId
       Handler: app.handler
       Runtime: nodejs14.x
       MemorySize: 512
@@ -232,7 +314,7 @@ Resources:
         Minify: true
         Sourcemap: true
         Target: es2020
-      SamResourceId: GetSubscriptions
+      SamResourceId: GetSubscriptionsbyownerId
   DocumentCrud:
     Type: AWS::Serverless::Function
     Properties:

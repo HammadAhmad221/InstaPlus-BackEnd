@@ -280,11 +280,11 @@ Resources:
         EntryPoints:
           - app.ts
 
-  Search:
+  getCustomersByownerId:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/lambda/search/
-      Handler: src/lambda/search/app.handler
+      CodeUri: src/lambda/getCustomersByOwnerId/
+      Handler: src/lambda/getCustomersByOwnerId/app.handler
       Runtime: nodejs14.x
       MemorySize: 512
       Layers:
@@ -293,7 +293,65 @@ Resources:
         UsersApi:
           Type: Api
           Properties:
-            Path: /search
+            Path: /getCustomersByOwnerId
+            Method: Get
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  getInstallmentsPlanByAuthor:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/getInstallmentPlansByAuthor/
+      Handler: src/lambda/getInstallmentPlansByAuthor/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getInstallmentPlansByAuthor
+            Method: Get
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+
+  getInstallmentsBysubscriptionId:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/getInstallmentsBySubId/
+      Handler: src/lambda/getInstallmentsBySubId/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getInstallmentsBySubId
             Method: Get
             # RestApiId: !Ref AuthorizationApiGateway
             # Auth:
@@ -309,7 +367,37 @@ Resources:
         EntryPoints:
           - app.ts
   
-  GetSubscriptions:
+  GetSubscriptionsbycustomerId:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/getSubscriptionsBycustomerId/
+      Handler: src/lambda/getSubscriptionsBycustomerId/app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 30
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getSubscriptionsBycustomerId
+            Method: Get
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  # Updated the authorizer name here
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  
+  GetSubscriptionsbyownerId:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/lambda/getSubscriptions/
