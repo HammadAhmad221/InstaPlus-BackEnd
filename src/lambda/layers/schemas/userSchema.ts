@@ -1,16 +1,3 @@
-// import mongoose, { Schema } from 'mongoose';
-
-// interface User {
-//   phoneNumber: string;
-// }
-
-// const userSchema = new Schema<User>({
-//   phoneNumber: { type: String, required: true, unique: true },
-// });
-
-// const UserModel = mongoose.model<User>('User', userSchema);
-
-// export {UserModel};
 
 import mongoose, { Schema,Document } from 'mongoose';
 

@@ -1,4 +1,4 @@
-import { InstallmentPlanModel } from '../layers/schemas/installmentPlanSchema'; 
+import { PlanModel } from '../layers/schemas/planSchema'; 
 import { connectToMongoDB, disconnectFromMongoDB } from '../layers/mongodb/db';
 
 
@@ -28,7 +28,7 @@ export const handler = async (event) => {
 async function getInstallmentPlans(author) {
   try {
     // Find all installment plans associated with the author
-    const installmentPlans = await InstallmentPlanModel.find({ author }).exec();
+    const installmentPlans = await PlanModel.find({ author }).exec();
 
     return installmentPlans;
   } catch (error) {

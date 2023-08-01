@@ -1,6 +1,5 @@
 import mongoose, { Schema, Model, Types, Document } from 'mongoose';
 
-
 // Define the Installment interface representing the document
 interface Installment extends Document {
   subscriptionID: Types.ObjectId;
@@ -14,55 +13,54 @@ interface Installment extends Document {
   paidOn?: Date;
   paidBy?: Types.ObjectId; // User ID
   paidTo?: Types.ObjectId; // User ID
-  
 }
 
 // Define the Installment schema
 const installmentSchema: Schema<Installment> = new Schema<Installment>({
   subscriptionID: {
     type: Schema.Types.ObjectId,
-    ref: 'Subscription',
-   // required: true,
+    ref: 'Subscription', // Make sure the correct model name is used here ('Subscription')
+    // required: true,
   },
   ownerID: {
     type: Schema.Types.ObjectId,
-    //required: true,
+    // required: true,
   },
   customerID: {
     type: Schema.Types.ObjectId,
-    //required: true,
+    // required: true,
   },
   created: {
     type: Date,
-    //required: true,
+    // required: true,
     default: Date.now,
   },
   amount: {
     type: Number,
-    //required: true,
+    // required: true,
   },
   dueDate: {
     type: Date,
-    //required: true,
+    // required: true,
   },
   paymentMethod: {
     type: Number,
-    //required: true,
+    // required: true,
   },
   status: {
     type: Number,
-    //required: true,
+    // required: true,
   },
   paidOn: {
     type: Date,
   },
   paidBy: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User', // Make sure the correct model name is used here ('User')
   },
   paidTo: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User', // Make sure the correct model name is used here ('User')
   },
 });
 

@@ -1,5 +1,5 @@
 import { create, update, del } from '../layers/utils/crudUtils';
-import { InstallmentPlanModel, InstallmentPlan } from '../layers/schemas/installmentPlanSchema';
+import { PlanModel, Plan } from '../layers/schemas/planSchema';
 import { APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { CONSTANTS } from '../layers/constants/constants';
 import { connectToMongoDB, disconnectFromMongoDB } from '../layers/mongodb/db';
@@ -33,8 +33,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     switch (event.headers.Method || event.headers.method) {
       case 'create': {
-        const installmentPlanData: Partial<InstallmentPlan> = body;
-        const newInstallmentPlan = await create<InstallmentPlan>(InstallmentPlanModel, installmentPlanData);
+        const installmentPlanData: Partial<Plan> = body;
+        const newInstallmentPlan = await create<Plan>(PlanModel, installmentPlanData);
         response = {
           statusCode: 200,
           headers: {
@@ -46,8 +46,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       }
       case 'update': {
         const id: string = event.queryStringParameters?.id || '';
-        const installmentPlanData: Partial<InstallmentPlan> = body;
-        const updatedInstallmentPlan = await update<InstallmentPlan>(InstallmentPlanModel, id, installmentPlanData);
+        const installmentPlanData: Partial<Plan> = body;
+        const updatedInstallmentPlan = await update<Plan>(PlanModel, id, installmentPlanData);
         if (updatedInstallmentPlan) {
           response = {
             statusCode: 200,
@@ -69,7 +69,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       }
       case 'delete': {
         const { id } = event.queryStringParameters || {};
-        const deletedInstallmentPlan = await del<InstallmentPlan>(InstallmentPlanModel, id);
+        const deletedInstallmentPlan = await del<Plan>(PlanModel, id);
         if (deletedInstallmentPlan) {
           response = {
             statusCode: 200,

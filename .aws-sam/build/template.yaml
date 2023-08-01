@@ -97,6 +97,87 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: InstallmentPlanCrud
+  GeneratePreSignedUrl:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GeneratePreSignedUrl
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /generatePresignedUrl
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: GeneratePreSignedUrl
+  ActivateSubscription:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ActivateSubscription
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /activateSubscription
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: ActivateSubscription
+  UploadProfile:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: UploadProfile
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /uploadProfile
+            Method: Post
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: UploadProfile
   GaurantorCrud:
     Type: AWS::Serverless::Function
     Properties:
@@ -151,6 +232,33 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: ProductCrud
+  GetCustomersInstallments:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetCustomersInstallments
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 64
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getCustomerInstallments
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: GetCustomersInstallments
   SubscriptionCrud:
     Type: AWS::Serverless::Function
     Properties:
@@ -287,6 +395,34 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: GetSubscriptionsbycustomerId
+  GetPendingSubscriptions:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetPendingSubscriptions
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 30
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /getpendingSubscriptions
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: GetPendingSubscriptions
   GetSubscriptionsbyownerId:
     Type: AWS::Serverless::Function
     Properties:

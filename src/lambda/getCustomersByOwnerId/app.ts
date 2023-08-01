@@ -40,7 +40,7 @@ async function getCustomersByOwnerID(ownerID) {
       ownerID: ownerID,
       status: { $in: [1, 2] }, // Assuming 1 represents an active subscription and 2 represents a partially paid subscription
     })
-    .populate('ownerID') // Populate the customerID field to get the customer details
+    .populate('customerID') // Populate the customerID field to get the customer details
     .exec();
 
     // Extract and return customer profiles from the active subscriptions

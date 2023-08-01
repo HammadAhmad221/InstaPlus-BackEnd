@@ -21,8 +21,8 @@ interface Subscription extends Document {
 // Define the Subscription schema
 const subscriptionSchema: Schema<Subscription> = new Schema<Subscription>({
   planID: {
-    type: Schema.Types.ObjectId,ref:'InstallmentPlan'
-//    required: true,
+    type: Schema.Types.ObjectId,ref:'Plan'
+    //required: true,
   },
   totalAmount: {
     type: Number,
