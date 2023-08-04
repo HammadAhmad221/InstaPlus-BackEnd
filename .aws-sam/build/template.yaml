@@ -5,37 +5,6 @@ Globals:
     Runtime: nodejs14.x
     Timeout: 100
 Resources:
-  Authorizer:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: Authorizer
-      Handler: auth.handler
-      Runtime: nodejs14.x
-      Environment:
-        Variables:
-          NODE_OPTIONS: ' --enable-source-maps'
-    Metadata:
-      BuildMethod: esbuild
-      BuildProperties:
-        EntryPoints:
-        - auth.ts
-        Minify: true
-        Sourcemap: true
-        Target: es2020
-      SamResourceId: Authorizer
-  AuthorizationApiGateway:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: Prod
-      Auth:
-        DefaultAuthorizer: Authorizer
-        Authorizers:
-          Authorizer:
-            FunctionPayloadType: TOKEN
-            FunctionArn:
-              Fn::GetAtt:
-              - Authorizer
-              - Arn
   Layers:
     Type: AWS::Serverless::LayerVersion
     Properties:
@@ -48,8 +17,17 @@ Resources:
     Properties:
       CodeUri: InstallmentCrud
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -75,8 +53,17 @@ Resources:
     Properties:
       CodeUri: InstallmentPlanCrud
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -103,7 +90,8 @@ Resources:
       CodeUri: GeneratePreSignedUrl
       Handler: app.handler
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -129,8 +117,17 @@ Resources:
     Properties:
       CodeUri: ActivateSubscription
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -157,7 +154,8 @@ Resources:
       CodeUri: UploadProfile
       Handler: app.handler
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -183,8 +181,17 @@ Resources:
     Properties:
       CodeUri: GaurantorCrud
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -210,8 +217,17 @@ Resources:
     Properties:
       CodeUri: ProductCrud
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -237,8 +253,17 @@ Resources:
     Properties:
       CodeUri: GetCustomersInstallments
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 64
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -264,8 +289,17 @@ Resources:
     Properties:
       CodeUri: SubscriptionCrud
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 64
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -291,8 +325,17 @@ Resources:
     Properties:
       CodeUri: getCustomersByownerId
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -318,8 +361,17 @@ Resources:
     Properties:
       CodeUri: getInstallmentsPlanByAuthor
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -345,8 +397,17 @@ Resources:
     Properties:
       CodeUri: getInstallmentsBysubscriptionId
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -372,8 +433,16 @@ Resources:
     Properties:
       CodeUri: GetSubscriptionsbycustomerId
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
       Timeout: 30
       Layers:
       - Ref: Layers
@@ -400,8 +469,16 @@ Resources:
     Properties:
       CodeUri: GetPendingSubscriptions
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
       Timeout: 30
       Layers:
       - Ref: Layers
@@ -428,8 +505,16 @@ Resources:
     Properties:
       CodeUri: GetSubscriptionsbyownerId
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
       Timeout: 30
       Layers:
       - Ref: Layers
@@ -456,8 +541,17 @@ Resources:
     Properties:
       CodeUri: DocumentCrud
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
       - Ref: Layers
       Events:
@@ -478,13 +572,58 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: DocumentCrud
+  dbHealthCheck:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: dbHealthCheck
+      Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 120
+      Layers:
+      - Ref: Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /dbHealthCheck
+            Method: Get
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - app.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: dbHealthCheck
   UsersPost:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: UsersPost
       Handler: app.handler
+      VpcConfig:
+        SubnetIds:
+        - subnet-0a750a027fba6d5ae
+        - subnet-025d552fa2a4db84f
+        - subnet-0e366cf148fda8bba
+        - subnet-051087f7364d37dda
+        SecurityGroupIds:
+        - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
       MemorySize: 1024
+      Timeout: 120
       Layers:
       - Ref: Layers
       Events:
@@ -505,8 +644,3 @@ Resources:
         Sourcemap: true
         Target: es2020
       SamResourceId: UsersPost
-Outputs:
-  InstaPlusApi:
-    Description: API Gateway endpoint URL for Prod stage for Insta Plus function
-    Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod

@@ -15,7 +15,8 @@ export const connectToMongoDB = async (): Promise<typeof mongoose> => {
 
   try {
     const connection = await mongoose.connect(
-      'mongodb://host.docker.internal:27017',
+     // 'mongodb://host.docker.internal:27017',
+      'mongodb://coderefs:Ammar12345678@coderefs-cluster.cluster-cdnvpfxnc7qm.us-west-2.docdb.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true',
       options,
     );
     console.log('DB Connected');

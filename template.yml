@@ -6,31 +6,31 @@ Globals:
     Timeout: 100
 
 Resources:
-  Authorizer:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: src/lambda/authorizer/
-      Handler: src/lambda/authorizer/auth.handler
-      Runtime: nodejs14.x
-    Metadata:
-      BuildMethod: esbuild
-      BuildProperties:
-        Minify: true
-        Target: es2020
-        Sourcemap: true
-        EntryPoints:
-          - auth.ts
+  # Authorizer:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: src/lambda/layers/authorizer/
+  #     Handler: src/lambda/layers/authorizer/auth.handler
+  #     Runtime: nodejs14.x
+  #   Metadata:
+  #     BuildMethod: esbuild
+  #     BuildProperties:
+  #       Minify: true
+  #       Target: es2020
+  #       Sourcemap: true
+  #       EntryPoints:
+  #         - auth.ts
 
-  AuthorizationApiGateway:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: Prod
-      Auth:
-        DefaultAuthorizer: Authorizer  # Updated the authorizer name here
-        Authorizers:
-          Authorizer:  # Updated the authorizer name here
-            FunctionPayloadType: TOKEN
-            FunctionArn: !GetAtt Authorizer.Arn
+  # AuthorizationApiGateway:
+  #   Type: AWS::Serverless::Api
+  #   Properties:
+  #     StageName: Prod
+  #     Auth:
+  #       DefaultAuthorizer: Authorizer  # Updated the authorizer name here
+  #       Authorizers:
+  #         Authorizer:  # Updated the authorizer name here
+  #           FunctionPayloadType: TOKEN
+  #           FunctionArn: !GetAtt Authorizer.Arn
 
   Layers:
     Type: AWS::Serverless::LayerVersion
@@ -45,8 +45,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/installmentService/
       Handler: src/lambda/installmentService/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -74,8 +83,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/planService/
       Handler: src/lambda/planService/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -104,7 +122,8 @@ Resources:
       CodeUri: src/lambda/generatePresignedUrl/
       Handler: src/lambda/generatePresignedUrl/app.handler
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -132,8 +151,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/activateSubscription/
       Handler: src/lambda/activateSubscription/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -142,11 +170,11 @@ Resources:
           Properties:
             Path: /activateSubscription
             Method: Get
-            # RestApiId: !Ref AuthorizationApiGateway
-            # Auth:
-            #   Authorizer: Authorizer
-            #   AuthorizationScopes:  
-            #   - user.read  # Updated the authorizer name here
+    #         RestApiId: !Ref AuthorizationApiGateway
+    #         Auth:
+    #           Authorizer: Authorizer
+    #           AuthorizationScopes:  
+    #           - user.read  # Updated the authorizer name here
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -162,7 +190,8 @@ Resources:
       CodeUri: src/lambda/uploadProfile/
       Handler: src/lambda/uploadProfile/app.handler
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -190,8 +219,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/gurantorService/
       Handler: src/lambda/gurantorService/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -218,8 +256,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/productService/
       Handler: src/lambda/productService/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -247,8 +294,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/getCustomerInstallments/
       Handler: src/lambda/getCustomerInstallments/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 64
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -276,8 +332,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/subscriptionService/
       Handler: src/lambda/subscriptionService/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 64
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -305,8 +370,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/getCustomersByOwnerId/
       Handler: src/lambda/getCustomersByOwnerId/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -334,8 +408,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/getInstallmentPlansByAuthor/
       Handler: src/lambda/getInstallmentPlansByAuthor/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -363,8 +446,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/getInstallmentsBySubId/
       Handler: src/lambda/getInstallmentsBySubId/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -392,8 +484,16 @@ Resources:
     Properties:
       CodeUri: src/lambda/getSubscriptionsBycustomerId/
       Handler: src/lambda/getSubscriptionsBycustomerId/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
       Timeout: 30
       Layers:
         - !Ref Layers
@@ -422,8 +522,16 @@ Resources:
     Properties:
       CodeUri: src/lambda/getpendingSubscriptions/
       Handler: src/lambda/getpendingSubscriptions/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
       Timeout: 30
       Layers:
         - !Ref Layers
@@ -453,8 +561,16 @@ Resources:
     Properties:
       CodeUri: src/lambda/getSubscriptions/
       Handler: src/lambda/getSubscriptions/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 512
+      MemorySize: 256
       Timeout: 30
       Layers:
         - !Ref Layers
@@ -483,8 +599,17 @@ Resources:
     Properties:
       CodeUri: src/lambda/documentService/
       Handler: src/lambda/documentService/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
-      MemorySize: 128
+      MemorySize: 256
+      Timeout: 30
       Layers:
         - !Ref Layers
       Events:
@@ -507,13 +632,60 @@ Resources:
         EntryPoints:
           - app.ts
   
+  dbHealthCheck:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/dbHealthCheck/
+      Handler: src/lambda/dbHealthCheck/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
+      Runtime: nodejs14.x
+      MemorySize: 512
+      Timeout: 120
+      Layers:
+        - !Ref Layers
+      Events:
+        UsersApi:
+          Type: Api
+          Properties:
+            Path: /dbHealthCheck
+            Method: Get
+            # RestApiId: !Ref AuthorizationApiGateway
+            # Auth:
+            #   Authorizer: Authorizer
+            #   AuthorizationScopes:  
+            #   - user.read  
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  
   UsersPost:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/lambda/users/
       Handler: src/lambda/users/app.handler
+      VpcConfig:
+        SubnetIds:
+          - subnet-0a750a027fba6d5ae
+          - subnet-025d552fa2a4db84f
+          - subnet-0e366cf148fda8bba
+          - subnet-051087f7364d37dda
+        SecurityGroupIds:
+          - sg-027ff995978ddcbd0
       Runtime: nodejs14.x
       MemorySize: 1024
+      Timeout: 120
       Layers:
         - !Ref Layers
       Events:
@@ -524,7 +696,7 @@ Resources:
             Method: Post
             # RestApiId: !Ref AuthorizationApiGateway
             # Auth:
-            #   Authorizer: None
+            #   Authorizer: Authorizer
             #   AuthorizationScopes:  
             #   - user.read  
     Metadata:
@@ -536,7 +708,7 @@ Resources:
         EntryPoints:
           - app.ts
 
-Outputs:
-  InstaPlusApi:
-    Description: API Gateway endpoint URL for Prod stage for Insta Plus function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+# Outputs:
+#   InstaPlusApi:
+#     Description: API Gateway endpoint URL for Prod stage for Insta Plus function
+#     Value: !Sub "https://${AuthorizationApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod"
