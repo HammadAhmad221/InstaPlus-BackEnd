@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://ammaarsaleem2017@bitbucket.org/ammaarsaleem2017/instaplus-backend.git"
+    "url": "git+https://github.com/HammadAhmad221/InstaPlus-BackEnd.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/ammaarsaleem2017/instaplus-backend#readme",
+  "homepage": "https://github.com/HammadAhmad221/InstaPlus-BackEnd.git",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.119",
     "@types/jsonwebtoken": "^9.0.2",
